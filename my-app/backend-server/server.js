@@ -103,7 +103,8 @@ app.get('/api/user-profile', async (req, res) => {
       name: user.fullName,
       profileImage: user.profileImage.startsWith('http')
         ? user.profileImage
-        : `http://localhost:5000${user.profileImage}`
+        : "https://closet-ai-backend.onrender.com"
+
     });
   } catch (err) {
     console.error(err);
