@@ -1,0 +1,474 @@
+[2025-04-05 19:52:51] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "summer", "styles": ["formal"]}
+[2025-04-05 19:52:53] Generated search query: men's summer formal wear medium skin tone
+
+[2025-04-05 19:53:29] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 88: character maps to <undefined>
+[2025-04-05 19:53:29] Successfully returned 3 products
+[2025-04-05 19:55:57] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "light", "season": "winter", "styles": ["ethnic"]}
+[2025-04-05 19:55:59] Generated search query: winter ethnic outfits for light skin female 25
+
+[2025-04-05 19:56:37] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 91: character maps to <undefined>
+[2025-04-05 19:56:37] Successfully returned 3 products
+[2025-04-05 20:02:30] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "winter", "styles": ["ethnic"]}
+[2025-04-05 20:03:12] Generated search query: men's winter ethnic clothing ideas medium skin tone
+
+[2025-04-05 20:03:49] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 91: character maps to <undefined>
+[2025-04-05 20:03:49] Successfully returned 3 products
+[2025-04-05 20:08:31] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "winter", "styles": []}
+[2025-04-05 20:08:32] Generated search query: winter casual outfits for medium skin tone women 25
+
+[2025-04-05 20:09:04] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 76: character maps to <undefined>
+[2025-04-05 20:09:04] Successfully returned 3 products
+[2025-04-05 20:09:56] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "winter", "styles": []}
+[2025-04-05 20:09:58] Generated search query: winter casual outfits for medium skin tone female 25
+
+[2025-04-05 20:10:28] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 76: character maps to <undefined>
+[2025-04-05 20:10:28] Successfully returned 3 products
+[2025-04-05 21:06:24] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["sporty"]}
+[2025-04-05 21:06:25] Generated search query: rainy day sporty outfits olive skin female 25"
+
+[2025-04-05 21:06:40] No products found
+[2025-04-05 21:07:04] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["sporty"]}
+[2025-04-05 21:07:18] Generated search query: sporty rain outfits olive skin tone female 25
+
+[2025-04-05 21:07:32] No products found
+[2025-04-05 21:08:02] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["sporty"]}
+[2025-04-05 21:08:04] Generated search query: rainy day sporty outfit ideas olive skin female 25
+
+[2025-04-05 21:08:19] No products found
+[2025-04-05 21:10:55] Received request with data: {"gender": "male", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["sporty"]}
+[2025-04-05 21:10:56] Generated search query: mens sporty rain gear medium skin tone 30s
+
+[2025-04-05 21:11:28] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 72: character maps to <undefined>
+[2025-04-05 21:11:28] Successfully returned 3 products
+[2025-04-05 21:22:10] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "olive", "season": "winter", "styles": ["formal"]}
+[2025-04-05 21:22:11] Generated search query: men's winter formal outfit ideas olive skin 25 years old
+
+[2025-04-05 21:22:40] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 93: character maps to <undefined>
+[2025-04-05 21:22:40] Successfully returned 3 products
+[2025-04-05 21:47:32] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "winter", "styles": []}
+[2025-04-05 21:47:35] Generated search query: winter casual outfits olive skin tone 25 year old female
+
+[2025-04-05 21:48:06] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 86: character maps to <undefined>
+[2025-04-05 21:48:06] Successfully returned 3 products
+[2025-04-05 21:56:25] Received request with data: {"gender": "female", "age": "18-24", "skinTone": "medium", "season": "summer", "styles": ["formal"]}
+[2025-04-05 21:56:26] Generated search query: formal summer outfits for medium skin tone 18 year old
+
+[2025-04-05 21:56:58] Name not found: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00A65413+60691]
+	GetHandleVerifier [0x00A65454+60756]
+	(No symbol) [0x00890693]
+	(No symbol) [0x008D8660]
+	(No symbol) [0x008D89FB]
+	(No symbol) [0x00920EE2]
+	(No symbol) [0x008FD0A4]
+	(No symbol) [0x0091E6FB]
+	(No symbol) [0x008FCE56]
+	(No symbol) [0x008CC5F3]
+	(No symbol) [0x008CD444]
+	GetHandleVerifier [0x00CABBC3+2446531]
+	GetHandleVerifier [0x00CA7198+2427544]
+	GetHandleVerifier [0x00CC2D5E+2541150]
+	GetHandleVerifier [0x00A7C3C5+154821]
+	GetHandleVerifier [0x00A82BED+181485]
+	GetHandleVerifier [0x00A6CC48+91464]
+	GetHandleVerifier [0x00A6CDF0+91888]
+	GetHandleVerifier [0x00A57980+4736]
+	BaseThreadInitThunk [0x759C5D49+25]
+	RtlInitializeExceptionChain [0x774BCF0B+107]
+	RtlGetAppContainerNamedObjectPath [0x774BCE91+561]
+
+[2025-04-05 21:57:03] Image not found: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00A65413+60691]
+	GetHandleVerifier [0x00A65454+60756]
+	(No symbol) [0x00890693]
+	(No symbol) [0x008D8660]
+	(No symbol) [0x008D89FB]
+	(No symbol) [0x00920EE2]
+	(No symbol) [0x008FD0A4]
+	(No symbol) [0x0091E6FB]
+	(No symbol) [0x008FCE56]
+	(No symbol) [0x008CC5F3]
+	(No symbol) [0x008CD444]
+	GetHandleVerifier [0x00CABBC3+2446531]
+	GetHandleVerifier [0x00CA7198+2427544]
+	GetHandleVerifier [0x00CC2D5E+2541150]
+	GetHandleVerifier [0x00A7C3C5+154821]
+	GetHandleVerifier [0x00A82BED+181485]
+	GetHandleVerifier [0x00A6CC48+91464]
+	GetHandleVerifier [0x00A6CDF0+91888]
+	GetHandleVerifier [0x00A57980+4736]
+	BaseThreadInitThunk [0x759C5D49+25]
+	RtlInitializeExceptionChain [0x774BCF0B+107]
+	RtlGetAppContainerNamedObjectPath [0x774BCE91+561]
+
+[2025-04-05 21:57:12] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 89: character maps to <undefined>
+[2025-04-05 21:57:12] Successfully returned 3 products
+[2025-04-05 23:04:43] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["formal"]}
+[2025-04-05 23:04:44] Generated search query: men's formal rainy weather outfits medium skin tone
+
+[2025-04-05 23:05:21] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 98: character maps to <undefined>
+[2025-04-05 23:05:21] Successfully returned 3 products
+[2025-04-05 23:31:57] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "summer", "styles": ["formal"]}
+[2025-04-05 23:31:58] Generated search query: summer formal outfits for olive skin female 25
+
+[2025-04-05 23:32:37] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 157: character maps to <undefined>
+[2025-04-05 23:32:37] Successfully returned 3 products
+[2025-04-06 11:43:29] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["formal"]}
+[2025-04-06 11:43:30] Generated search query: men's formal rain outfit ideas medium skin tone 20s
+
+[2025-04-06 11:44:03] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 137: character maps to <undefined>
+[2025-04-06 11:44:03] Successfully returned 3 products
+[2025-04-06 12:07:19] Received request with data: {"gender": "female", "age": "35-44", "skinTone": "olive", "season": "winter", "styles": ["formal"]}
+[2025-04-06 12:07:20] Generated search query: winter formal outfits olive skin tone 35 year old woman
+
+[2025-04-06 12:07:50] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 57: character maps to <undefined>
+[2025-04-06 12:07:50] Successfully returned 3 products
+[2025-04-06 12:35:24] Received request with data: {"gender": "male", "age": "45+", "skinTone": "olive", "season": "winter", "styles": ["streetwear"]}
+[2025-04-06 12:35:24] Error in endpoint: invalid literal for int() with base 10: '45+'
+[2025-04-06 12:35:51] Received request with data: {"gender": "male", "age": "45+", "skinTone": "olive", "season": "winter", "styles": ["streetwear"]}
+[2025-04-06 12:35:51] Error in endpoint: invalid literal for int() with base 10: '45+'
+[2025-04-06 12:36:23] Received request with data: {"gender": "male", "age": "45+", "skinTone": "olive", "season": "winter", "styles": ["streetwear"]}
+[2025-04-06 12:36:23] Error in endpoint: invalid literal for int() with base 10: '45+'
+[2025-04-06 12:40:06] Received request with data: {"gender": "male", "age": "45+", "skinTone": "olive", "season": "winter", "styles": ["streetwear"]}
+[2025-04-06 12:40:06] Error in endpoint: invalid literal for int() with base 10: '45+'
+[2025-04-06 12:40:33] Received request with data: {"gender": "male", "age": "18-24", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 12:40:36] Generated search query: men's ethnic rainwear medium skin tone 18 year old
+
+[2025-04-06 12:47:35] Received request with data: {"gender": "male", "age": "45+", "skinTone": "olive", "season": "winter", "styles": ["vintage"]}
+[2025-04-06 12:47:35] Error in endpoint: invalid literal for int() with base 10: '45+'
+[2025-04-06 12:48:10] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "winter", "styles": ["vintage"]}
+[2025-04-06 12:48:12] Generated search query: men's vintage winter clothing ideas medium skin tone 20s
+
+[2025-04-06 12:48:41] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 102: character maps to <undefined>
+[2025-04-06 12:48:41] Successfully returned 3 products
+[2025-04-06 12:50:15] Received request with data: {"gender": "male", "age": "45+", "skinTone": "dark", "season": "winter", "styles": ["vintage"]}
+[2025-04-06 12:50:15] Error in endpoint: invalid literal for int() with base 10: '45+'
+[2025-04-06 12:51:24] Received request with data: {"gender": "male", "age": "45+", "skinTone": "dark", "season": "winter", "styles": ["vintage"]}
+[2025-04-06 12:51:24] Error in endpoint: invalid literal for int() with base 10: '45+'
+[2025-04-06 12:51:43] Received request with data: {"gender": "male", "age": "35-44", "skinTone": "dark", "season": "winter", "styles": ["vintage"]}
+[2025-04-06 12:51:46] Generated search query: men's vintage winter clothing dark skin tone
+
+[2025-04-06 12:52:06] Assigned UUID: prod-113619 for product: Men Plus Size Winter Zipper Coat Lapel Collar Long Sleeve Padded Leather Jacket Vintage Mens Skiing Coat
+[2025-04-06 12:52:09] Assigned UUID: prod-865171 for product: Cantabil Men Blue And Black Solid Casual Winter Wear Reversible Jacket (L) (Black) At Nykaaman, Products Handpicked For Men
+[2025-04-06 12:52:12] Assigned UUID: prod-958062 for product: Cantabil Men Mustard Solid Casual Winter Wear Reversible Jacket (L) (Mustard) At Nykaaman, Products Handpicked For Men
+[2025-04-06 12:52:14] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 126: character maps to <undefined>
+[2025-04-06 12:52:14] Successfully returned 3 products
+[2025-04-06 16:17:28] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["sporty", "ethnic"]}
+[2025-04-06 16:17:30] Generated search query: rainy day outfit ideas sporty female medium skin tone 25
+
+[2025-04-06 16:17:53] Assigned UUID: prod-627132 for product: FINESTFIT Blouse (Skin, XX-Large)
+[2025-04-06 16:17:56] Assigned UUID: prod-869493 for product: RAREISM Fit & Flare Mini Dress
+[2025-04-06 16:17:59] Assigned UUID: prod-508237 for product: Women's PUMA CLASSICS Sleeveless Dress In Light Straw Size M
+[2025-04-06 16:18:01] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 56: character maps to <undefined>
+[2025-04-06 16:18:01] Successfully returned 3 products
+[2025-04-06 16:35:32] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["formal"]}
+[2025-04-06 16:35:33] Generated search query: formal rain outfit olive skin tone female 25
+
+[2025-04-06 16:35:53] Assigned UUID: prod-593107 for product: Montrex Checked Trench Coat For Women (Olive, M)
+[2025-04-06 16:35:56] Assigned UUID: prod-881157 for product: Kazo Trench Coat With Insert Pockets For Women (Olive, S)
+[2025-04-06 16:35:59] Assigned UUID: prod-978051 for product: Smarty Pants Women Olive Green Lightweight Open Front Jacket
+[2025-04-06 16:36:01] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 72: character maps to <undefined>
+[2025-04-06 16:36:01] Successfully returned 3 products
+[2025-04-06 17:29:06] Received request with data: {"gender": "female", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 17:29:08] Generated search query: ethnic rain wear for women medium skin tone
+
+[2025-04-06 17:29:30] Assigned UUID: prod-111685 for product: Zeel Women Colourblocked Hooded Rain Suit
+[2025-04-06 17:29:33] Assigned UUID: prod-991092 for product: HOUSE OF VEDAS Women Waterproof Hooded Rain Jacket
+[2025-04-06 17:29:36] Assigned UUID: prod-373987 for product: 20Dresses Women Green Solid Comfort-Fit Knee-Length Rain Jacket
+[2025-04-06 17:29:40] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 63: character maps to <undefined>
+[2025-04-06 17:29:40] Successfully returned 3 products
+[2025-04-06 17:32:56] Received request with data: {"gender": "female", "age": "35-44", "skinTone": "olive", "season": "Rain", "styles": ["formal"]}
+[2025-04-06 17:32:57] Generated search query: formal rainy day outfit ideas for olive skin tone women 30s
+
+[2025-04-06 17:33:17] Assigned UUID: prod-157332 for product: Purvaja Colourblock Round-Neck Bodycon Dress For Women (Olive, XL)
+[2025-04-06 17:33:21] Assigned UUID: prod-675134 for product: RAREISM Fit & Flare Mini Dress
+[2025-04-06 17:33:25] Assigned UUID: prod-229557 for product: Yuniqee Women Bodycon Dress With Spread Collar For Women (Olive, L)
+[2025-04-06 17:33:28] Assigned UUID: prod-349277 for product: Clobug Women Colour-Block Bodycon Dress For Women (Olive, XL)
+[2025-04-06 17:33:31] Assigned UUID: prod-437185 for product: Yuniqee One-Shoulder Bodycon Dress With Front-Slit For Women (Olive, S)
+[2025-04-06 17:33:33] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 89: character maps to <undefined>
+[2025-04-06 17:33:33] Successfully returned 5 products
+[2025-04-06 17:38:14] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["sporty"]}
+[2025-04-06 17:38:16] Generated search query: rainy day outfits for sporty women with medium skin tones age 25"
+
+[2025-04-06 17:38:36] Assigned UUID: prod-928218 for product: Held Rainstorm Top Ladies Rain Jacket, Black-Yellow, Size S For Women
+[2025-04-06 17:38:39] Assigned UUID: prod-924681 for product: Women's PUMA Classics Printed Woven Jacket In Spring Fern Size S
+[2025-04-06 17:38:42] Assigned UUID: prod-312068 for product: FXR Recruit F.A.S.T. Insulated Ladies One Piece Snowmobile Suit, Black-Green, Size 4 For Women
+[2025-04-06 17:38:45] Assigned UUID: prod-553071 for product: Shell Jacket, Windproof Waterproof, Mountaineering Suit, Cold-Proof Warm Cardigan Pink White Women / 2XL
+[2025-04-06 17:38:48] Assigned UUID: prod-984850 for product: Ladies - Grey Waffled Zip-Through Hoodie - Size: M - H&M
+[2025-04-06 17:38:51] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 93: character maps to <undefined>
+[2025-04-06 17:38:51] Successfully returned 5 products
+[2025-04-06 17:41:18] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "summer", "styles": ["casual"]}
+[2025-04-06 17:41:19] Generated search query: summer casual outfits olive skin tone 25 year old female
+
+[2025-04-06 17:41:39] Assigned UUID: prod-110836 for product: Twenty Dresses By Nykaa Fashion Olive Green Solid Puff Sleeves Midi Dress With Belt (Set Of 2) (L) (Olive) At Nykaa, Best Beauty Products Online
+[2025-04-06 17:41:42] Assigned UUID: prod-949138 for product: PURVAJA Olive Green Striped A-Line Midi Dress
+[2025-04-06 17:41:45] Assigned UUID: prod-800300 for product: Nayo Women Olive Green & Blue Ethnic Motifs Print A-Line Kurta
+[2025-04-06 17:41:48] Assigned UUID: prod-857430 for product: STREET 9 Women Olive Green Solid Midi Sheath Dress
+[2025-04-06 17:41:51] Assigned UUID: prod-870326 for product: RAREISM Fit & Flare Mini Dress
+[2025-04-06 17:41:54] Assigned UUID: prod-706251 for product: BAESD Checked Georgette Fit & Flare Dress
+[2025-04-06 17:41:57] Assigned UUID: prod-978872 for product: Divena Women Mustard Yellow & Green Yoke Design A-Line Kurta
+[2025-04-06 17:41:59] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 168: character maps to <undefined>
+[2025-04-06 17:41:59] Successfully returned 7 products
+[2025-04-06 17:49:58] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "summer", "styles": ["casual"]}
+[2025-04-06 17:49:59] Generated search query: summer casual outfits medium skin tone 25 year old female
+
+[2025-04-06 17:50:19] Assigned UUID: prod-446989 for product: Berrylush Women Green & White Printed Two-Piece Dress
+[2025-04-06 17:50:22] Assigned UUID: prod-897116 for product: RAREISM Fit & Flare Mini Dress
+[2025-04-06 17:50:25] Assigned UUID: prod-187455 for product: Athena Women Floral Printed Linen Co-Ord Set
+[2025-04-06 17:50:29] Assigned UUID: prod-865228 for product: BAESD Checked Georgette Fit & Flare Dress
+[2025-04-06 17:50:32] Assigned UUID: prod-445777 for product: Forever New Women Fit & Flare Midi Dress
+[2025-04-06 17:50:35] Assigned UUID: prod-297799 for product: European And American Backless, Summer Women's Dress Pink / M
+[2025-04-06 17:50:39] Assigned UUID: prod-368471 for product: BAESD Floral Printed Flared Sleeves High Neck Fit & Flare Mini Dress
+[2025-04-06 17:50:42] Assigned UUID: prod-365637 for product: MANGO Women Belted A-Line Midi Dress
+[2025-04-06 17:50:44] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 74: character maps to <undefined>
+[2025-04-06 17:50:44] Successfully returned 8 products
+[2025-04-06 17:51:37] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "summer", "styles": ["casual"]}
+[2025-04-06 17:51:38] Generated search query: summer casual outfits for medium skin tone female 25
+
+[2025-04-06 17:51:58] Assigned UUID: prod-685207 for product: Berrylush Women Green & White Printed Two-Piece Dress
+[2025-04-06 17:52:01] Assigned UUID: prod-980691 for product: Athena Women Floral Printed Linen Co-Ord Set
+[2025-04-06 17:52:05] Assigned UUID: prod-557452 for product: RAREISM Fit & Flare Mini Dress
+[2025-04-06 17:52:08] Assigned UUID: prod-678984 for product: Dressberry Women Elegant Coral Floral Sun Dress
+[2025-04-06 17:52:11] Assigned UUID: prod-262182 for product: W Women Yellow Printed A-Line Dress
+[2025-04-06 17:52:15] Assigned UUID: prod-829540 for product: European And American Backless, Summer Women's Dress Lotus Root / XS
+[2025-04-06 17:52:18] Assigned UUID: prod-653417 for product: BAESD Checked Georgette Fit & Flare Dress
+[2025-04-06 17:52:21] Assigned UUID: prod-555986 for product: BAESD Floral Printed Flared Sleeves High Neck Fit & Flare Mini Dress
+[2025-04-06 17:52:23] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 74: character maps to <undefined>
+[2025-04-06 17:52:23] Successfully returned 8 products
+[2025-04-06 17:53:18] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "summer", "styles": ["casual"]}
+[2025-04-06 17:53:21] Generated search query: summer outfits for medium skin tone female age 25 casual
+
+[2025-04-06 17:53:41] Assigned UUID: prod-934694 for product: Wholesale Summer New Women's Dress Low Price Women's Dress Causal Ladies Dress
+[2025-04-06 17:53:44] Assigned UUID: prod-153995 for product: Berrylush Women Green & White Printed Two-Piece Dress
+[2025-04-06 17:53:47] Assigned UUID: prod-846449 for product: RAREISM Fit & Flare Mini Dress
+[2025-04-06 17:53:50] Assigned UUID: prod-726288 for product: Sexy One-Shoulder Backless Split Dress, Summer Elegant Slim-Fit Solid Color, Satin Dress For Women Red / M
+[2025-04-06 17:53:53] Assigned UUID: prod-477787 for product: Wholesale Custom OEM ODM 2024 Summer One-Line Neck Short Sleeve Striped Ruffled Casual Dress For Women
+[2025-04-06 17:53:56] Assigned UUID: prod-651413 for product: Dressberry Women Elegant Coral Floral Sun Dress
+[2025-04-06 17:53:59] Assigned UUID: prod-912678 for product: 2024 Short Sleeve V-Neck Color Blocking Sheath Dress Summer Contrast Color Dress Ladies ELEGANT Dress Clothes Women Wholesale
+[2025-04-06 17:54:02] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 99: character maps to <undefined>
+[2025-04-06 17:54:02] Successfully returned 7 products
+[2025-04-06 17:55:35] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["formal"]}
+[2025-04-06 17:55:36] Generated search query: men's formal rainy season outfit ideas medium skin tone 25 year old
+
+[2025-04-06 17:55:57] Assigned UUID: prod-819768 for product: Varun Chakkilam Seashell Pink Open Jacket And Kurta With Trouser (Set Of 3) (S) (Pink) At Nykaaman, Products Handpicked For Men
+[2025-04-06 17:56:00] Assigned UUID: prod-732439 for product: KISAH Men Textured Regular Fit Ethnic Motifs Kurta Jacket Trouser Set
+[2025-04-06 17:56:03] Assigned UUID: prod-384810 for product: Van Heusen Sport Men Navy Blue Checked Slim-Fit Single-Breasted Casual Blazer
+[2025-04-06 17:56:07] Assigned UUID: prod-941663 for product: Manyavar Men Charcoal Black Kurta | Tailored Fit, Shirt Collar, Ankle Length, Full Sleeves, Unique And Stylish Look | Exclusive Collection, Wedding |
+[2025-04-06 17:56:10] Assigned UUID: prod-502631 for product: Andamen Regular Fit Men Beige Printed Full Sleeve Overshirt (S) (Beige) At Nykaaman, Products Handpicked For Men
+[2025-04-06 17:56:13] Assigned UUID: prod-993674 for product: Manyavar Men Off-White Kurta Set | Satin, Bandhgala Jacket Style, Wedding & Festive, Ethnic | M
+[2025-04-06 17:56:16] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 151: character maps to <undefined>
+[2025-04-06 17:56:16] Successfully returned 6 products
+[2025-04-06 17:59:41] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["casual"]}
+[2025-04-06 17:59:51] Generated search query: casual rainy day outfit ideas female medium skin tone 25
+
+[2025-04-06 18:02:29] Assigned UUID: prod-640057 for product: Women's PUMA Classics Printed Woven Jacket In Spring Fern Size S
+[2025-04-06 18:02:32] Assigned UUID: prod-949899 for product: RAREISM Fit & Flare Mini Dress
+[2025-04-06 18:02:35] Assigned UUID: prod-213875 for product: Divyadham Textiles Floral Printed Shirt Collar Tunic & Trousers
+[2025-04-06 18:02:38] Assigned UUID: prod-942265 for product: Athena Women Floral Printed Linen Co-Ord Set
+[2025-04-06 18:02:43] Assigned UUID: prod-729353 for product: Berrylush Women Green & White Printed Two-Piece Dress
+[2025-04-06 18:02:54] Assigned UUID: prod-242286 for product: SF Jeans Medium Blue Printed Casual Full Sleeves Shirt Collar Women Relaxed Fit Jackets Size S
+[2025-04-06 18:03:08] Assigned UUID: prod-580544 for product: Athena Women Lilac Floral Printed Linen Shirt With Trouser Co-Ords Set
+[2025-04-06 18:03:31] Assigned UUID: prod-288517 for product: Dressberry Women Grey Solid Hooded Faux Fur Parka Jacket
+[2025-04-06 18:03:34] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 86: character maps to <undefined>
+[2025-04-06 18:03:34] Successfully returned 8 products
+[2025-04-06 18:06:47] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:06:48] Generated search query: men's ethnic rainy season outfit ideas medium skin tone
+
+[2025-04-06 18:07:09] Assigned UUID: prod-200856 for product: KISAH Men Textured Regular Fit Ethnic Motifs Kurta Jacket Trouser Set
+[2025-04-06 18:07:12] Assigned UUID: prod-109605 for product: KISAH Men Ash Grey Printed Cotton Blend Kurta Jacket Trouser Set With Ethnic Motifs (42) (Black) At Nykaaman, Products Handpicked For Men
+[2025-04-06 18:07:15] Assigned UUID: prod-893698 for product: MANQ Men Yellow & Golden Ethnic Motifs Jaquard Woven Design Nehru Jacket
+[2025-04-06 18:07:18] Assigned UUID: prod-729700 for product: KISAH Men Regular Kurta Trousers & Bandhgala Jodhpuri Blazer Set
+[2025-04-06 18:07:21] Assigned UUID: prod-738616 for product: Charkhee Mens Ivory Stripe Pathani Kurta With Salwar And Jacket (Set Of 3) (Ivory) At Nykaaman, Products Handpicked For Men
+[2025-04-06 18:07:24] Assigned UUID: prod-947800 for product: Hangup Men Multicoloured Ethnic-Motifs Design Single-Breasted Bandhgala Blazer
+[2025-04-06 18:07:27] Assigned UUID: prod-268696 for product: Urbano Fashion Men Dark Green Regular Fit Printed Full Sleeve Casual Jacket (S) (Green) At Nykaaman, Products Handpicked For Men
+[2025-04-06 18:07:30] Assigned UUID: prod-110594 for product: Manyavar Men Dark Green Kurta Set | Jacquard, Wedding & Festive, Pyjamas | XL
+[2025-04-06 18:07:32] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 91: character maps to <undefined>
+[2025-04-06 18:07:32] Successfully returned 8 products
+[2025-04-06 18:18:53] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["formal"]}
+[2025-04-06 18:18:55] Generated search query: mens formal rain gear medium skin tone 25 year old
+
+[2025-04-06 18:19:30] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 60: character maps to <undefined>
+[2025-04-06 18:19:30] Successfully returned 5 products
+[2025-04-06 18:24:04] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:24:06] Generated search query: mens ethnic wear rain medium skin tone 25
+
+[2025-04-06 18:24:20] No products found
+[2025-04-06 18:25:20] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:25:21] Generated search query: men's ethnic rainwear medium skin tone age 25
+
+[2025-04-06 18:25:34] No products found
+[2025-04-06 18:27:17] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:27:20] Generated search query: mens ethnic rainwear medium skin tone age 25
+
+[2025-04-06 18:27:32] No products found
+[2025-04-06 18:27:59] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:28:00] Generated search query: men's ethnic wear for rainy season medium skin tone
+
+[2025-04-06 18:28:36] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 91: character maps to <undefined>
+[2025-04-06 18:28:36] Successfully returned 5 products
+[2025-04-06 18:33:39] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:33:40] Generated search query: ethnic rainy season outfit olive skin female 25
+
+[2025-04-06 18:34:11] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 61: character maps to <undefined>
+[2025-04-06 18:34:11] Successfully returned 3 products
+[2025-04-06 18:46:16] Received request with data: {"gender": "female", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:46:23] Generated search query: ethnic rainy season outfits for medium skin tone women
+
+[2025-04-06 18:47:29] No products found
+[2025-04-06 18:47:42] Received request with data: {"gender": "female", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:47:48] Generated search query: ethnic rainwear ideas for 35 year old medium skin tone female
+
+[2025-04-06 18:48:24] No products found
+[2025-04-06 18:49:00] Received request with data: {"gender": "female", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:49:01] Generated search query: ethnic rainy season outfits for medium skin tone women 30s
+
+[2025-04-06 18:49:18] No products found
+[2025-04-06 18:49:49] Received request with data: {"gender": "female", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 18:49:50] Generated search query: ethnic rainwear outfits for medium skin tone female 35
+
+[2025-04-06 18:50:27] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 63: character maps to <undefined>
+[2025-04-06 18:50:27] Successfully returned 5 products
+[2025-04-06 18:58:39] Received request with data: {"gender": "female", "age": "45+", "skinTone": "olive", "season": "winter", "styles": ["ethnic"]}
+[2025-04-06 18:58:39] Error in endpoint: invalid literal for int() with base 10: '45+'
+[2025-04-06 18:59:25] Received request with data: {"gender": "female", "age": "45+", "skinTone": "olive", "season": "winter", "styles": ["ethnic"]}
+[2025-04-06 18:59:25] Error in endpoint: invalid literal for int() with base 10: '45+'
+
+[2025-04-06 19:04:34] Received request with data: {"gender": "female", "age": "45+", "skinTone": "olive", "season": "winter", "styles": ["ethnic"]}
+[2025-04-06 19:04:34] Error in endpoint: invalid literal for int() with base 10: '45+'
+[2025-04-06 19:05:50] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:05:52] Generated search query: ethnic rainy season outfit ideas olive skin tone female 25
+
+[2025-04-06 19:11:47] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:11:48] Generated search query: ethnic rainy season outfits olive skin female 25
+
+[2025-04-06 19:12:05] No products found
+[2025-04-06 19:14:26] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:14:27] Generated search query: ethnic rainy season outfits olive skin female 25
+
+[2025-04-06 19:14:41] No products found
+[2025-04-06 19:15:06] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:15:08] Generated search query: ethnic rain outfits for olive skin female 25
+
+[2025-04-06 19:15:23] No product links found on Bing Shopping
+[2025-04-06 19:15:58] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:15:59] Generated search query: ethnic rainy season outfit ideas olive skin female 25
+
+[2025-04-06 19:16:40] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 90: character maps to <undefined>
+[2025-04-06 19:16:40] Successfully returned 4 products
+[2025-04-06 19:21:37] Received request with data: {"gender": "male", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:21:39] Generated search query: young adult male Rain ethnic clothing for medium skin tone
+[2025-04-06 19:21:52] No products found
+[2025-04-06 19:22:34] Received request with data: {"gender": "male", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:22:35] Generated search query: men's ethnic rainy season outfits medium skin tone
+
+[2025-04-06 19:22:49] No products found
+[2025-04-06 19:27:37] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:27:39] Generated search query: ethnic rainy day outfit olive skin female 20s
+
+[2025-04-06 19:27:53] No products found
+[2025-04-06 19:28:53] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:28:54] Generated search query: ethnic rainy season outfits olive skin 20s female
+
+[2025-04-06 19:29:07] No products found
+[2025-04-06 19:32:13] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:32:14] Generated search query: ethnic rainy season outfit ideas olive skin female 20s
+
+[2025-04-06 19:32:27] No products found
+[2025-04-06 19:32:47] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:32:48] Generated search query: ethnic rainy season outfit ideas olive skin female 20s
+
+[2025-04-06 19:33:01] No products found
+[2025-04-06 19:33:17] Received request with data: {"gender": "male", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:33:18] Generated search query: men's ethnic rainwear medium skin tone 30s
+
+[2025-04-06 19:33:34] No products found
+[2025-04-06 19:33:51] Received request with data: {"gender": "male", "age": "35-44", "skinTone": "medium", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:33:53] Generated search query: men's ethnic rainwear medium skin tone 30s
+
+[2025-04-06 19:34:28] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 70: character maps to <undefined>
+[2025-04-06 19:34:28] Successfully returned 5 products
+[2025-04-06 19:36:04] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:36:05] Generated search query: ethnic rainy season outfits olive skin 20s female
+
+[2025-04-06 19:36:18] No product links found on Bing Shopping
+[2025-04-06 19:36:54] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "summer", "styles": ["vintage"]}
+[2025-04-06 19:36:55] Generated search query: vintage summer outfits for medium skin tone female 25
+
+[2025-04-06 19:37:13] No product links found on Bing Shopping
+[2025-04-06 19:37:52] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:37:53] Generated search query: ethnic rainy day outfits olive skin female 20s
+
+[2025-04-06 19:38:06] No product links found on Bing Shopping
+[2025-04-06 19:40:03] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:40:04] Generated search query: ethnic rainy day outfit ideas olive skin 20s female
+
+[2025-04-06 19:40:18] No product links found on Bing Shopping
+[2025-04-06 19:40:30] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:40:31] Generated search query: ethnic rainy season outfit ideas olive skin female 20s
+
+[2025-04-06 19:40:44] No product links found on Bing Shopping
+[2025-04-06 19:41:02] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "summer", "styles": ["vintage"]}
+[2025-04-06 19:41:03] Generated search query: summer vintage outfit ideas for medium skin tone female 25
+
+[2025-04-06 19:41:16] No product links found on Bing Shopping
+[2025-04-06 19:41:37] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:41:38] Generated search query: ethnic rainy season outfits olive skin 20s female
+
+[2025-04-06 19:42:04] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 128: character maps to <undefined>
+[2025-04-06 19:42:04] Successfully returned 1 products
+[2025-04-06 19:44:37] Received request with data: {"gender": "female", "age": "20-25", "skinTone": "olive", "season": "rainy", "styles": ["ethnic"]}
+[2025-04-06 19:44:38] Generated search query: ethnic clothing for women olive skin rainy weather
+
+[2025-04-06 19:45:17] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 104: character maps to <undefined>
+[2025-04-06 19:45:17] Successfully returned 5 products
+[2025-04-06 19:47:01] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "summer", "styles": ["vintage"]}
+[2025-04-06 19:47:04] Generated search query: vintage summer outfit ideas for medium skin tone female 25
+
+[2025-04-06 19:47:39] Error saving to CSV: 'charmap' codec can't encode character '\u20b9' in position 74: character maps to <undefined>
+[2025-04-06 19:47:39] Successfully returned 5 products
+[2025-04-06 19:54:40] Received request with data: {"gender": "male", "age": "35-44", "skinTone": "dark", "season": "Rain", "styles": ["ethnic"]}
+[2025-04-06 19:54:41] Generated search query: mens ethnic wear dark skin rainy season
+
+[2025-04-06 19:55:31] Successfully returned 8 products
+[2025-04-06 22:44:49] Received request with data: {"gender": "female", "age": "35-44", "skinTone": "olive", "season": "Rain", "styles": ["bohemian"]}
+[2025-04-06 22:44:50] Generated search query: bohemian rainy day outfit olive skin 35 female
+
+[2025-04-06 22:45:04] No products found
+[2025-04-06 22:45:53] Received request with data: {"gender": "female", "age": "35-44", "skinTone": "olive", "season": "Rain", "styles": ["bohemian"]}
+[2025-04-06 22:45:53] Generated search query: bohemian rain outfit ideas olive skin tone female 35
+
+[2025-04-06 22:46:17] Successfully returned 1 products
+[2025-04-06 23:12:54] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "summer", "styles": ["casual"]}
+[2025-04-06 23:12:55] Generated search query: summer casual outfits medium skin tone female 25
+
+[2025-04-06 23:13:53] Successfully returned 8 products
+[2025-04-06 23:15:41] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "summer", "styles": ["casual"]}
+[2025-04-06 23:15:43] Generated search query: summer casual outfits for medium skin tone female age 25
+
+[2025-04-06 23:16:30] Successfully returned 8 products
+[2025-07-20 00:40:28] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["casual"]}
+[2025-07-20 00:40:29] Generated search query: men's casual rainy day outfits medium skin tone 25 years old
+
+[2025-07-20 00:41:20] Successfully returned 8 products
+[2025-07-20 00:45:45] Received request with data: {"gender": "female", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["formal"]}
+[2025-07-20 00:45:46] Generated search query: formal rainy day outfits for medium skin tone 25 year old woman
+
+[2025-07-20 00:46:31] Successfully returned 8 products
+[2025-07-20 12:02:20] Received request with data: {"gender": "male", "age": "35-44", "skinTone": "light", "season": "winter", "styles": ["formal"]}
+[2025-07-20 12:02:21] Generated search query: men's winter formal wear light skin tone
+
+[2025-07-20 12:03:09] Successfully returned 8 products
+[2025-07-22 19:36:54] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "Rain", "styles": ["casual"]}
+[2025-07-22 19:36:55] Generated search query: men's casual rainy day outfits medium skin tone
+
+[2025-08-21 09:31:24] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "olive", "season": "Rain", "styles": ["casual"]}
+[2025-08-21 09:31:24] Generated search query: young adult male Rain casual clothing for olive skin tone
+[2025-08-21 09:32:14] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "medium", "season": "spring", "styles": ["formal"]}
+[2025-08-21 09:32:15] Generated search query: young adult male spring formal clothing for medium skin tone
+[2025-08-21 09:32:27] Successfully returned 8 products
+[2025-08-21 09:32:59] Successfully returned 8 products
+[2025-08-21 12:39:51] Received request with data: {"gender": "male", "age": "25-34", "skinTone": "light", "season": "Rain", "styles": ["vintage"]}
+[2025-08-21 12:39:52] Generated search query: young adult male Rain vintage clothing for light skin tone
+[2025-08-21 12:40:48] Successfully returned 8 products
