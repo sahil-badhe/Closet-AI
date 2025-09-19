@@ -32,7 +32,8 @@ const Profile = () => {
         }
 
         const userResponse = await fetch(
-          `http://localhost:5000/api/user-profile?email=${currentUser.email}`
+           "https://closet-ai-backend.onrender.com"
+
         );
 
         if (userResponse.status === 404) {
@@ -49,7 +50,8 @@ const Profile = () => {
         }
 
         const outfitsResponse = await fetch(
-          `http://localhost:5000/api/saved-outfits?email=${currentUser.email}`
+        "https://closet-ai-backend.onrender.com"
+
         );
         if (!outfitsResponse.ok)
           throw new Error("Failed to fetch saved outfits");
@@ -76,7 +78,8 @@ const Profile = () => {
   const handleRemoveOutfit = async (outfitId) => {
     try {
       const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      const response = await fetch("http://localhost:5000/api/save-outfit", {
+      const response = await fetch( "https://closet-ai-backend.onrender.com"
+, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

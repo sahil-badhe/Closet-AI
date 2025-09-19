@@ -66,7 +66,8 @@ const ResultsPage = () => {
         action: isCurrentlyLiked ? "unlike" : "like",
       };
 
-      const response = await fetch("http://localhost:5000/api/save-outfit", {
+      const response = await fetch("https://closet-ai-backend.onrender.com"
+, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(likeData),

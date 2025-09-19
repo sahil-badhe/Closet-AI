@@ -37,7 +37,8 @@ const ProfileSetup = () => {
         formData.append('profileImage', photo);
       }
 
-      const response = await fetch('http://localhost:5000/api/register', {
+      const response = await fetch("https://closet-ai-backend.onrender.com"
+, {
         method: 'POST',
         body: formData,
       });
