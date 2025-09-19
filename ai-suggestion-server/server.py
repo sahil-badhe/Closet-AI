@@ -12,7 +12,7 @@ from urllib.parse import quote_plus, urlparse, parse_qs, urlunparse, urlencode
 import time
 from flask_cors import CORS
 import csv
-from datetime import datetimecd
+from datetime import datetime
 import random
 
 app = Flask(__name__)
