@@ -25,7 +25,7 @@ import streetwear from "../assets/streetwear.jpg";
 import sporty from "../assets/sporty.webp";
 import vintage from "../assets/vintage.jpg";
 import bohemian from "../assets/bohemia.jpg";
-import minimalist from "../assets/minimalist.jpg";
+import Minimalist from "../assets/Minimalist.jpg";
 
 const StyleCustomization = () => {
   const [step, setStep] = useState(1);
