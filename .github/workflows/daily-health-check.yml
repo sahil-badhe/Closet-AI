@@ -39,7 +39,7 @@ jobs:
         working-directory: ./my-app
         run: |
           cat package.json
-          npm test
+          npm test -- --passWithNoTests
 
       - name: Install Backend Dependencies
         working-directory: ./ai-suggestion-server

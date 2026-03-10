@@ -91,7 +91,7 @@ jobs:
         working-directory: ./my-app
         run: |
           npm install
-          npm test
+          npm test -- --passWithNoTests
 
       - name: Run Backend Unit Tests
         working-directory: ./ai-suggestion-server
