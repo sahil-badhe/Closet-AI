@@ -11,7 +11,7 @@ yarn-debug.log*
 yarn-error.log*
 /tmp/
 .git/
-package-lock.json
+
 /ai-suggestion-server/logs/
 /ai-suggestion-server/__pycache__/
 /ai-suggestion-server/*.csv
