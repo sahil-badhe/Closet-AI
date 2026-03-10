@@ -228,6 +228,10 @@ def scrape_product_details(product_urls):
     driver.quit()
     return products
 
+@app.route('/')
+def health_check_root():
+    return jsonify({"status": "ok", "message": "Server is running"}), 200
+
 @app.route('/api/recommendations', methods=['POST'])
 def get_recommendations():
     try:

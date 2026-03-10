@@ -17,13 +17,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-#          cache: 'npm'
-#          cache-dependency-path: './my-app/package-lock.json'
+          cache: 'npm'
+          cache-dependency-path: './my-app/package-lock.json'
 
       - name: Front-end Build
         working-directory: ./my-app
         run: |
-          npm install
+          npm ci
           npm run build
 
       - name: Set up Python
@@ -81,6 +81,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './my-app/package-lock.json'
       
       - name: Use Python
         uses: actions/setup-python@v5
@@ -88,13 +90,13 @@ jobs:
           python-version: '3.11'
 
       - name: Run Frontend Unit Tests
-        working-directory: ./my-app
+        working-directory: './my-app'
         run: |
-          npm install
+          npm ci
           npm test -- --passWithNoTests
 
       - name: Run Backend Unit Tests
-        working-directory: ./ai-suggestion-server
+        working-directory: './ai-suggestion-server'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -113,5 +115,10 @@ jobs:
 
       - name: Run Functional/Integration Tests
         run: |
-          # Placeholder for integration tests (e.g., using curl to check endpoints)
-          curl -f http://localhost:5001/ || exit 1
+          # Robust check for server availability with retries
+          for i in {1..5}; do
+            curl -f http://localhost:5001/ && exit 0
+            echo "Waiting for server... ($i/5)"
+            sleep 5
+          done
+          exit 1
