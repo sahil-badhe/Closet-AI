@@ -1,0 +1,117 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    branches: [ main, master, develop ]
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  setup-and-build:
+    name: Setup & Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './my-app/package-lock.json'
+
+      - name: Front-end Build
+        working-directory: ./my-app
+        run: |
+          npm install
+          npm run build
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: './ai-suggestion-server/requirements.txt'
+
+      - name: Backend Dependency Check
+        working-directory: ./ai-suggestion-server
+        run: pip install -r requirements.txt
+
+  security-scanning:
+    name: Security Scanning
+    needs: setup-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Important for Gitleaks and SonarCloud
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Gitleaks will fail the job if secrets are found
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'table'
+          exit-code: '1' # Fail the pipeline if vulnerabilities found
+          severity: 'CRITICAL,HIGH'
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        # Note: Requires SONAR_TOKEN secret to be configured in GitHub
+
+  testing:
+    name: Multi-layer Testing
+    needs: setup-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up environments
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Use Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Frontend Unit Tests
+        working-directory: ./my-app
+        run: |
+          npm install
+          npm test
+
+      - name: Run Backend Unit Tests
+        working-directory: ./ai-suggestion-server
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+          python -m pytest tests/test_server.py
+
+      # Example Integration/API Test Stage
+      - name: Start services (Detached)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          cd ai-suggestion-server && (python server.py &)
+          cd ../my-app && (npm run dev &)
+          sleep 10 # Wait for startup
+
+      - name: Run Functional/Integration Tests
+        run: |
+          # Placeholder for integration tests (e.g., using curl to check endpoints)
+          curl -f http://localhost:5001/ || exit 1

@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+server_log.txt
+clothing_data.csv
