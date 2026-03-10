@@ -37,7 +37,9 @@ jobs:
 
       - name: Run Frontend Tests
         working-directory: ./my-app
-        run: npm test
+        run: |
+          cat package.json
+          npm test
 
       - name: Install Backend Dependencies
         working-directory: ./ai-suggestion-server
