@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: './my-app/package-lock.json'
+          cache-dependency-path: my-app/package-lock.json
 
       - name: Front-end Build
         working-directory: ./my-app
@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
-          cache-dependency-path: './ai-suggestion-server/requirements.txt'
+          cache-dependency-path: ai-suggestion-server/requirements.txt
 
       - name: Backend Dependency Check
         working-directory: ./ai-suggestion-server
@@ -82,7 +82,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: './my-app/package-lock.json'
+          cache-dependency-path: my-app/package-lock.json
       
       - name: Use Python
         uses: actions/setup-python@v5
