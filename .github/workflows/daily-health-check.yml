@@ -13,15 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Debug - List Files
-        run: ls -R
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # cache: 'npm' # Temporarily disabled
-          # cache-dependency-path: my-app/package-lock.json
+          cache: 'npm'
+          cache-dependency-path: |
+            ./my-app/package-lock.json
+            ./path/to/second/package-lock.json
+            ./path/to/third/package-lock.json
 
       - name: Set up Python
         uses: actions/setup-python@v5
