@@ -13,6 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Cache Node dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            my-app/node_modules
+            my-app/package-lock.json
+          key: ${{ runner.os }}-node-${{ hashFiles('my-app/package-lock.json') }}
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ai-suggestion-server/.venv
+            ai-suggestion-server/requirements.txt
+          key: ${{ runner.os }}-pip-${{ hashFiles('ai-suggestion-server/requirements.txt') }}
+
       - name: Debug - List Files
         run: ls -R
 
