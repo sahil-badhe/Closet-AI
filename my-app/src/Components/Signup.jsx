@@ -19,7 +19,7 @@ const Signup = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/check-email"
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_SERVER_URL}/api/check-email`
         , {
           method: 'POST',
           headers: {

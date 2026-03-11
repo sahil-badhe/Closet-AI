@@ -193,7 +193,7 @@ const StyleCustomization = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/recommendations",
+        `${import.meta.env.VITE_AI_SERVER_URL}/api/recommendations`,
         {
           method: "POST",
           headers: {
@@ -208,7 +208,7 @@ const StyleCustomization = () => {
       }
 
       const data = await response.json();
-      return data;
+      return data.products;
     } catch (error) {
       console.error("Error sending data to server:", error);
       throw error;

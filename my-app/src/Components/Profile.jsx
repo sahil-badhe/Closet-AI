@@ -32,7 +32,7 @@ const Profile = () => {
         }
 
         const userResponse = await fetch(
-          `http://localhost:5000/api/user-profile?email=${currentUser.email}`
+          `${import.meta.env.VITE_BACKEND_SERVER_URL}/api/user-profile?email=${currentUser.email}`
         );
 
         if (userResponse.status === 404) {
@@ -49,7 +49,7 @@ const Profile = () => {
         }
 
         const outfitsResponse = await fetch(
-          `http://localhost:5000/api/saved-outfits?email=${currentUser.email}`
+          `${import.meta.env.VITE_BACKEND_SERVER_URL}/api/saved-outfits?email=${currentUser.email}`
         );
         if (!outfitsResponse.ok)
           throw new Error("Failed to fetch saved outfits");
@@ -76,7 +76,7 @@ const Profile = () => {
   const handleRemoveOutfit = async (outfitId) => {
     try {
       const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      const response = await fetch("http://localhost:5000/api/save-outfit"
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_SERVER_URL}/api/save-outfit`
         , {
           method: "POST",
           headers: {
