@@ -18,14 +18,14 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: my-app/package-lock.json
+          cache-dependency-path: './my-app/package-lock.json'
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          # cache: 'pip' # Temporarily disabled
-          # cache-dependency-path: ai-suggestion-server/requirements.txt
+          cache: 'pip'
+          cache-dependency-path: './ai-suggestion-server/requirements.txt'
 
       - name: Install Frontend Dependencies
         working-directory: ./my-app
