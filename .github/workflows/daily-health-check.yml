@@ -6,9 +6,10 @@ on:
   workflow_dispatch: # Allow manual trigger
 
 jobs:
-  health-check:
+  frontend:
+    name: Node.js Frontend
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -17,11 +18,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
 
       - name: Install Frontend Dependencies
         working-directory: ./my-app
@@ -34,6 +30,20 @@ jobs:
       - name: Run Frontend Tests
         working-directory: ./my-app
         run: npm test
+
+  backend:
+    name: Python Backend
+    runs-on: ubuntu-latest
+    needs: frontend  # Only runs if the frontend job succeeds
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Install Backend Dependencies
         working-directory: ./ai-suggestion-server
