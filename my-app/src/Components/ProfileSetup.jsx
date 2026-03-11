@@ -37,7 +37,7 @@ const ProfileSetup = () => {
         formData.append('profileImage', photo);
       }
 
-      const response = await fetch("http://localhost:5000/api/register"
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_SERVER_URL}/api/register`
         , {
           method: 'POST',
           body: formData,
