@@ -49,7 +49,7 @@ email-validator==2.0.0
 SQLAlchemy==2.0.28
 SQLAlchemy-Utils==0.41.0
 alembic==1.11.1
-#psycopg2-binary==2.9.9
+psycopg2-binary==2.9.9
 python-dotenv==1.0.0
 Flask-SQLAlchemy==3.0.3
 Flask-Migrate==4.0.4
