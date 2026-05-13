@@ -22,8 +22,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Hardened CORS Configuration
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
-CORS(app, resources={r"/api/*": {"origins": allowed_origins}})
+CORS(app)
 
 def get_age_group(age, gender):
     gender = gender.lower()
