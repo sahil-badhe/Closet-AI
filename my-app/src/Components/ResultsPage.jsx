@@ -1,327 +1,187 @@
-import { useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Heart, Share2, ShoppingBag, Sparkles, ArrowLeft } from "lucide-react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Heart, Share2, ShoppingBag, Sparkles, ArrowLeft, Filter, Tag, Info } from "lucide-react";
+import { useState, useEffect } from "react";
+
+const SkeletonCard = () => (
+  <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 animate-pulse">
+    <div className="h-64 bg-gray-200" />
+    <div className="p-5 space-y-3">
+      <div className="h-4 bg-gray-200 rounded w-3/4" />
+      <div className="h-4 bg-gray-200 rounded w-1/2" />
+      <div className="pt-4 flex justify-between">
+        <div className="h-10 bg-gray-200 rounded-xl w-full mr-2" />
+        <div className="h-10 bg-gray-200 rounded-xl w-12" />
+      </div>
+    </div>
+  </div>
+);
 
 const ResultsPage = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const recommendations = state?.recommendations || [];
+  const [recommendations, setRecommendations] = useState(state?.recommendations || []);
+  const [filteredRecs, setFilteredRecs] = useState(state?.recommendations || []);
   const [likedProducts, setLikedProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [notification, setNotification] = useState({
-    show: false,
-    message: "",
-    type: "",
-  });
+  const [isPageLoading, setIsPageLoading] = useState(!state?.recommendations);
+  const [activeCategory, setActiveCategory] = useState("All");
 
-  const showNotification = (message, type = "success") => {
-    setNotification({ show: true, message, type });
-    setTimeout(
-      () => setNotification({ show: false, message: "", type: "" }),
-      3000
-    );
-  };
+  const categories = ["All", ...new Set(recommendations.map(r => r.category))];
 
-  const toggleLike = async (productId) => {
-    try {
-      if (!productId || productId === "undefined") {
-        throw new Error("Invalid product ID");
-      }
-
-      if (!Array.isArray(recommendations) || recommendations.length === 0) {
-        console.error("Recommendations array is empty or invalid");
-        return;
-      }
-
-      const validRecommendations = recommendations.filter(p => p?.productId);
-      const product = validRecommendations.find(p => p.productId === productId);
-
-      if (!product) {
-        console.error("Product not found in valid recommendations");
-        throw new Error("Product not found");
-      }
-
-      setIsLoading(true);
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      const userEmail = currentUser?.email;
-
-      if (!userEmail) {
-        showNotification("Please login to save outfits", "error");
-        return;
-      }
-
-      const randomId = Math.floor(10000000 + Math.random() * 90000000);
-      const customProductId = `${userEmail}_${randomId}`;
-
-      const isCurrentlyLiked = likedProducts.includes(productId);
-      const likeData = {
-        userEmail,
-        productId: customProductId,
-        productName: product.name || "Unnamed Product",
-        productImage: product.image_url || "",
-        productPrice: product.price || "N/A",
-        productUrl: product.detail_url || "",
-        action: isCurrentlyLiked ? "unlike" : "like",
-      };
-
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_SERVER_URL}/api/save-outfit`
-        , {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(likeData),
-        });
-
-      const data = await response.json();
-      if (!response.ok) {
-        if (data.message.includes("already saved")) {
-          setLikedProducts((prev) => Array.from(new Set([...prev, productId])));
-        }
-        throw new Error(data.message || "Failed to save outfit");
-      }
-
-      setLikedProducts((prev) =>
-        isCurrentlyLiked
-          ? prev.filter((id) => id !== productId)
-          : [...prev, productId]
-      );
-
-      showNotification(isCurrentlyLiked ? "Outfit removed" : "Outfit saved!");
-    } catch (error) {
-      console.error("Error:", error);
-      showNotification(error.message, "error");
-    } finally {
-      setIsLoading(false);
+  useEffect(() => {
+    if (activeCategory === "All") {
+      setFilteredRecs(recommendations);
+    } else {
+      setFilteredRecs(recommendations.filter(r => r.category === activeCategory));
     }
-  };
+  }, [activeCategory, recommendations]);
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  const toggleLike = (id) => {
+    setLikedProducts(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
   };
 
   return (
-    <div className="min-h-screen pt-20 pb-16 bg-gradient-to-b from-indigo-50 to-white">
-      {/* Notification */}
-      {notification.show && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-          className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg flex items-center ${notification.type === "error"
-              ? "bg-red-100 text-red-800 border border-red-200"
-              : "bg-green-100 text-green-800 border border-green-200"
-            }`}
-        >
-          {notification.type === "error" ? (
-            <svg
-              className="w-5 h-5 mr-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          ) : (
-            <svg
-              className="w-5 h-5 mr-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          )}
-          {notification.message}
-        </motion.div>
-      )}
-
+    <div className="min-h-screen pt-24 pb-16 bg-[#fafafa]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Button */}
-        <motion.button
-          onClick={() => navigate(-1)}
-          className="flex items-center text-indigo-600 hover:text-indigo-800 mb-6"
-          whileHover={{ x: -3 }}
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to quiz
-        </motion.button>
-
-        {/* Header Section */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="inline-flex items-center justify-center mb-4 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-indigo-100 shadow-sm"
+        
+        {/* Top Navigation */}
+        <div className="flex items-center justify-between mb-8">
+          <motion.button
+            onClick={() => navigate("/customize")}
+            className="flex items-center text-gray-500 hover:text-indigo-600 transition-colors font-medium group"
+            whileHover={{ x: -4 }}
           >
-            <Sparkles className="h-5 w-5 text-indigo-600 mr-2" />
-            <span className="text-indigo-600 font-medium">
-              AI-Powered Recommendations
-            </span>
-          </motion.div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-            Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">Personalized</span> Style
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Handpicked recommendations based on your unique preferences
-          </p>
-        </motion.div>
-
-        {/* Results Grid */}
-        {recommendations.length > 0 ? (
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="grid grid-cols-4 gap-6"
-          >
-            {recommendations.map((product) => (
-              <motion.div
-                key={product.productId}
-                variants={item}
-                className="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
-                whileHover={{ y: -5 }}
+            <ArrowLeft className="h-5 w-5 mr-2 group-hover:stroke-indigo-600" />
+            Back to Stylist
+          </motion.button>
+          
+          <div className="flex items-center space-x-2 bg-white p-1 rounded-2xl shadow-sm border border-gray-100">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${activeCategory === cat ? "bg-indigo-600 text-white shadow-md" : "text-gray-500 hover:bg-gray-50"}`}
               >
-                {/* Product Image */}
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={product.image_url}
-                    alt={product.name}
-                    className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <button
-                    onClick={() => toggleLike(product.productId)}
-                    disabled={isLoading}
-                    className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:scale-110 transition-transform"
-                  >
-                    {isLoading && likedProducts.includes(product.productId) ? (
-                      <svg
-                        className="animate-spin h-5 w-5 text-rose-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                    ) : (
-                      <Heart
-                        className={`h-5 w-5 transition-colors ${likedProducts.includes(product.productId)
-                            ? "fill-rose-500 text-rose-500"
-                            : "text-gray-400 hover:text-rose-400"
-                          }`}
-                      />
-                    )}
-                  </button>
-                </div>
-
-                {/* Product Info */}
-                <div className="p-5">
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-sm font-medium text-gray-800 line-clamp-2">
-                      {product.name}
-                    </h3>
-                    <span className="text-lg font-semibold text-indigo-600 whitespace-nowrap ml-3">
-                      {product.price}
-                    </span>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex justify-between items-center mt-5">
-                    <a
-                      href={product.detail_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 mr-3 px-4 py-2.5 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-medium rounded-2xl flex items-center justify-center space-x-2 hover:shadow-md transition-all"
-                    >
-                      <ShoppingBag className="h-4 w-4" />
-                      <span>Buy Now</span>
-                    </a>
-                    <button
-                      className="p-3 rounded-2xl border border-gray-200 hover:bg-gray-50 transition-colors"
-                      onClick={() => {
-                        if (navigator.share) {
-                          navigator.share({
-                            title: product.name,
-                            text: `Check out this ${product.name} I found!`,
-                            url: product.detail_url,
-                          }).catch(console.error);
-                        } else {
-                          navigator.clipboard.writeText(product.detail_url);
-                          showNotification("Link copied to clipboard");
-                        }
-                      }}
-                    >
-                      <Share2 className="h-4 w-4 text-gray-600" />
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
+                {cat}
+              </button>
             ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100"
+          </div>
+        </div>
+
+        {/* Header */}
+        <div className="text-center mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 mb-4"
           >
-            <div className="mx-auto w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
-              <Sparkles className="h-8 w-8 text-indigo-500" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">
-              No recommendations found
-            </h3>
-            <p className="text-gray-600 mb-6 max-w-md mx-auto">
-              We couldn't find any matches based on your preferences. Try adjusting your style choices.
-            </p>
-            <motion.button
-              onClick={() => navigate("/customize")}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-medium rounded-lg hover:shadow-md transition-all"
-            >
-              Retake Style Quiz
-            </motion.button>
+            <Sparkles className="h-4 w-4 text-indigo-600 mr-2" />
+            <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">AI Curated Collection</span>
           </motion.div>
+          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+            Your <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">Closet AI</span> Picks
+          </h1>
+          <p className="mt-4 text-gray-500 max-w-xl mx-auto">
+            Our Stylist AI analyzed your profile to find these perfect matches.
+          </p>
+        </div>
+
+        {/* Grid Area */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {isPageLoading ? (
+            Array(8).fill(0).map((_, i) => <SkeletonCard key={i} />)
+          ) : (
+            <AnimatePresence>
+              {filteredRecs.map((product) => (
+                <motion.div
+                  key={product.productId}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  whileHover={{ y: -8 }}
+                  className="group bg-white rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col"
+                >
+                  {/* Image Container */}
+                  <div className="relative h-80 overflow-hidden">
+                    <img
+                      src={product.image_url}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    <button
+                      onClick={() => toggleLike(product.productId)}
+                      className="absolute top-4 right-4 p-2.5 bg-white/90 backdrop-blur-md rounded-full shadow-lg hover:scale-110 transition-transform active:scale-95"
+                    >
+                      <Heart className={`h-5 w-5 ${likedProducts.includes(product.productId) ? "fill-rose-500 text-rose-500" : "text-gray-400"}`} />
+                    </button>
+
+                    <div className="absolute bottom-4 left-4">
+                      <span className="px-3 py-1 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-lg shadow-lg">
+                        {product.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 flex-1 flex flex-col">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-lg font-bold text-gray-900 leading-tight group-hover:text-indigo-600 transition-colors">
+                        {product.name}
+                      </h3>
+                      <span className="text-xl font-black text-gray-900">{product.price}</span>
+                    </div>
+                    
+                    <p className="text-gray-500 text-sm line-clamp-2 mb-4">
+                      {product.description}
+                    </p>
+
+                    {/* AI Stylist Reason */}
+                    <div className="bg-indigo-50/50 rounded-2xl p-3 mb-6 border border-indigo-100/50 relative overflow-hidden">
+                      <div className="flex items-start">
+                        <Info className="h-4 w-4 text-indigo-500 mt-0.5 mr-2 flex-shrink-0" />
+                        <p className="text-[11px] text-indigo-700 leading-relaxed font-medium italic">
+                          "{product.style_reason}"
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="mt-auto flex space-x-2">
+                      <a
+                        href={product.detail_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-gray-900 text-white py-3.5 rounded-2xl font-bold text-sm flex items-center justify-center space-x-2 hover:bg-indigo-600 transition-all shadow-lg active:scale-95"
+                      >
+                        <ShoppingBag className="h-4 w-4" />
+                        <span>View Details</span>
+                      </a>
+                      <button 
+                        className="p-3.5 bg-gray-100 rounded-2xl hover:bg-gray-200 transition-colors"
+                        onClick={() => {
+                          navigator.clipboard.writeText(product.detail_url);
+                          alert("Link copied to clipboard!");
+                        }}
+                      >
+                        <Share2 className="h-4 w-4 text-gray-600" />
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          )}
+        </div>
+
+        {!isPageLoading && filteredRecs.length === 0 && (
+          <div className="text-center py-20 bg-white rounded-[3rem] border border-dashed border-gray-200">
+            <Filter className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-gray-900">No items match this filter</h3>
+            <p className="text-gray-500">Try selecting a different category or retake the quiz.</p>
+          </div>
         )}
       </div>
     </div>

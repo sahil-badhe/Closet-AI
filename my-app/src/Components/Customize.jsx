@@ -29,7 +29,7 @@ import Minimalist from "../assets/Minimalist.jpg";
 
 const StyleCustomization = () => {
   const [step, setStep] = useState(1);
-  const totalSteps = 5;
+  const totalSteps = 7;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [completed, setCompleted] = useState([]);
@@ -38,6 +38,8 @@ const StyleCustomization = () => {
   const [selectedSkinTone, setSelectedSkinTone] = useState(null);
   const [selectedSeason, setSelectedSeason] = useState(null);
   const [selectedStyles, setSelectedStyles] = useState([]);
+  const [selectedOccasion, setSelectedOccasion] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
 
   const genderOptions = [
     {
@@ -117,16 +119,28 @@ const StyleCustomization = () => {
     },
     { id: "bohemian", label: "Bohemian", value: "bohemian", image: bohemian },
     { id: "sporty", label: "Sporty", value: "sporty", image: sporty },
-    {
-      id: "minimalist",
-      label: "Minimalist",
-      value: "minimalist",
-      image: Minimalist,
-    },
+    { id: "minimalist", label: "Minimalist", value: "minimalist", image: Minimalist },
     { id: "vintage", label: "Vintage", value: "vintage", image: vintage },
+    { id: "korean", label: "Korean", value: "korean", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2" },
   ];
 
-  const handleOptionSelect = (stepNumber, value) => {
+  const occasions = [
+    { id: "party", label: "Party", value: "party" },
+    { id: "office", label: "Office", value: "office" },
+    { id: "college", label: "College", value: "college" },
+    { id: "wedding", label: "Wedding", value: "wedding" },
+    { id: "casual", label: "Casual Outing", value: "casual outing" },
+  ];
+
+  const colors = [
+    { id: "black", label: "Black", hex: "#000000" },
+    { id: "white", label: "White", hex: "#FFFFFF" },
+    { id: "blue", label: "Navy Blue", hex: "#000080" },
+    { id: "beige", label: "Beige", hex: "#F5F5DC" },
+    { id: "red", label: "Deep Red", hex: "#8B0000" },
+    { id: "green", label: "Olive Green", hex: "#556B2F" },
+  ];
+
     if (stepNumber === 1) {
       setSelectedGender(value);
     } else if (stepNumber === 2) {
@@ -135,6 +149,10 @@ const StyleCustomization = () => {
       setSelectedSkinTone(value);
     } else if (stepNumber === 4) {
       setSelectedSeason(value);
+    } else if (stepNumber === 6) {
+      setSelectedOccasion(value);
+    } else if (stepNumber === 7) {
+      setSelectedColor(value);
     }
 
     if (!completed.includes(stepNumber)) {
@@ -142,13 +160,14 @@ const StyleCustomization = () => {
     }
   };
 
-  const handleNext = () => {
     const hasSelection =
       (step === 1 && selectedGender) ||
       (step === 2 && selectedAge) ||
       (step === 3 && selectedSkinTone) ||
       (step === 4 && selectedSeason) ||
-      step === 5;
+      (step === 5) ||
+      (step === 6 && selectedOccasion) ||
+      (step === 7 && selectedColor);
 
     if (hasSelection) {
       setStep(step + 1);
@@ -166,8 +185,8 @@ const StyleCustomization = () => {
   };
 
   const handleComplete = async () => {
-    if (!completed.includes(5)) {
-      setCompleted([...completed, 5]);
+    if (!completed.includes(7)) {
+      setCompleted([...completed, 7]);
     }
 
     setIsLoading(true);
@@ -189,11 +208,14 @@ const StyleCustomization = () => {
       skinTone: selectedSkinTone,
       season: selectedSeason,
       styles: selectedStyles,
+      occasion: selectedOccasion,
+      colors: selectedColor,
     };
 
     try {
+      const apiUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_AI_SERVER_URL;
       const response = await fetch(
-        `${import.meta.env.VITE_AI_SERVER_URL}/api/recommendations`,
+        `${apiUrl}/api/recommendations`,
         {
           method: "POST",
           headers: {
@@ -208,7 +230,7 @@ const StyleCustomization = () => {
       }
 
       const data = await response.json();
-      return data.products;
+      return data.recommendations; // Updated to match new API format
     } catch (error) {
       console.error("Error sending data to server:", error);
       throw error;
@@ -479,19 +501,42 @@ const StyleCustomization = () => {
             {renderSeasons()}
           </div>
         );
-      case 5:
+      case 6:
         return (
           <div>
-            <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">
-              Select Your Style Preferences
-            </h2>
-            <p className="text-center text-gray-500 mb-6">
-              Choose as many as you like (optional)
-            </p>
-            {renderImageOptions(stylePreferences, true, selectedStyles)}
+            <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">What's the Occasion?</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {occasions.map((o) => (
+                <button
+                  key={o.id}
+                  onClick={() => handleOptionSelect(6, o.value)}
+                  className={`p-4 rounded-xl text-left border-2 transition-all ${selectedOccasion === o.value ? "border-indigo-500 bg-indigo-50" : "border-gray-100 hover:border-indigo-200"}`}
+                >
+                  <span className="font-medium text-gray-800">{o.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         );
-      case 6:
+      case 7:
+        return (
+          <div>
+            <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Your Color Preference?</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              {colors.map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => handleOptionSelect(7, c.label)}
+                  className={`p-4 rounded-xl flex flex-col items-center border-2 transition-all ${selectedColor === c.label ? "border-indigo-500 bg-indigo-50" : "border-gray-100 hover:border-indigo-200"}`}
+                >
+                  <div className="w-10 h-10 rounded-full mb-2 shadow-sm border border-gray-100" style={{ backgroundColor: c.hex }} />
+                  <span className="text-sm font-medium text-gray-700">{c.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      case 8:
         return renderCompletionCard();
       default:
         return null;
@@ -546,20 +591,22 @@ const StyleCustomization = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => (step === totalSteps ? handleComplete() : handleNext())}
-                disabled={(step === totalSteps && isLoading) ||
+                onClick={() => (step === 7 ? handleComplete() : handleNext())}
+                disabled={(step === 7 && isLoading) ||
                   (step === 1 && !selectedGender) ||
                   (step === 2 && !selectedAge) ||
                   (step === 3 && !selectedSkinTone) ||
-                  (step === 4 && !selectedSeason)}
-                className={`px-6 py-2.5 rounded-2xl font-medium flex items-center ${step === totalSteps
+                  (step === 4 && !selectedSeason) ||
+                  (step === 6 && !selectedOccasion) ||
+                  (step === 7 && !selectedColor)}
+                className={`px-6 py-2.5 rounded-2xl font-medium flex items-center ${step === 7
                   ? "bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white shadow-md"
                   : "bg-indigo-500 hover:bg-indigo-600 text-white"
                   }`}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
-                {step === totalSteps ? (
+                {step === 7 ? (
                   isLoading ? (
                     <>
                       <svg
