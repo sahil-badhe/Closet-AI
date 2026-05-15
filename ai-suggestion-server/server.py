@@ -102,21 +102,26 @@ def generate_search_query(gender, age, skin_tone, style, season):
     age_group = get_age_group(age, gender)
 
     prompt = f"""
-Generate ONLY one fashion shopping search query.
+Create a SHORT Google Shopping fashion search query.
 
-User Details:
-- Gender: {gender}
-- Age Group: {age_group}
-- Skin Tone: {skin_tone}
-- Season: {season}
-- Fashion Style: {style}
+User:
+Gender: {gender}
+Age Group: {age_group}
+Skin Tone: {skin_tone}
+Season: {season}
+Fashion Style: {style}
 
-Rules:
-- Make query optimized for shopping websites
-- Include trending fashion keywords
-- Include outfit related keywords
-- Keep it short
-- Return only the query text
+IMPORTANT:
+- return only shopping keywords
+- no sentence
+- no explanation
+- include outfit, clothing, fashion
+- make it broad so many products appear
+
+Example:
+men vintage streetwear outfit
+women korean casual fashion
+summer minimalist clothing
 """
 
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
@@ -149,11 +154,15 @@ Rules:
 
         query = response_json['candidates'][0]['content']['parts'][0]['text']
 
-        return query.strip().replace('"', '')
+        query = query.strip().replace('"', '')
+
+        print("GEMINI QUERY:", query)
+
+        return query
 
     except:
 
-        return f"{gender} {season} {style} outfit fashion"
+        return f"{gender} {style} outfit fashion clothing"
 
 
 # =========================
