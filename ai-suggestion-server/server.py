@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import requests
 import json
+import traceback
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -272,9 +273,11 @@ def get_recommendations():
         return jsonify({"products": products})
         
     except Exception as e:
-        log_to_file(f"Error in endpoint: {str(e)}")
-        return jsonify({"error": "An internal error occurred"}), 500
+        traceback.print_exc()
 
+        return jsonify({
+            "error": str(e)
+        }), 500
 import os
 
 if __name__ == '__main__':
