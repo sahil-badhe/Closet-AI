@@ -94,65 +94,66 @@ def save_to_csv(data):
 
 def scrape_bing_shopping(query):
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0",
         "Accept-Language": "en-US,en;q=0.9",
     }
+
     encoded_query = quote_plus(query)
-    url = f"https://www.bing.com/shop?q={encoded_query}&FORM=SHOPTB"
-    
+    url = f"https://www.bing.com/shop?q={encoded_query}"
+
     products = []
+
     try:
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(url, headers=headers, timeout=15)
+
         if response.status_code != 200:
-            log_to_file(f"Bing search failed with status {response.status_code}")
+            log_to_file(f"Bing request failed: {response.status_code}")
             return []
-        
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # Bing Shopping structure uses various classes for product items
-        items = soup.select('.br-item, .br-pdItem, .br-gOffCard, .br-pdItemWrap')
-        
-        for item in items[:16]:
-            try:
-                product = {}
-                
-                # Name
-                name_elem = item.select_one('.br-pdTtl, .title, .br-name, .br-pdItemName')
-                product['name'] = name_elem.get_text(strip=True) if name_elem else "Not found"
-                
-                # Link
-                link_elem = item.select_one('a[href*="/shop/productpage"], a[href*="/aclick"]')
-                if link_elem:
-                    detail_url = link_elem['href']
-                    if detail_url.startswith('/'):
-                        detail_url = "https://www.bing.com" + detail_url
-                    product['detail_url'] = detail_url
-                else:
-                    product['detail_url'] = url
-                
-                # Image
-                img_elem = item.select_one('img')
-                if img_elem:
-                    img_url = img_elem.get('src') or img_elem.get('data-src')
-                    product['image_url'] = modify_image_url(img_url)
-                else:
-                    product['image_url'] = "Not found"
-                    
-                # Price
-                price_elem = item.select_one('.pd-price, .br-pdPrice, .price, .br-price')
-                product['price'] = price_elem.get_text(strip=True) if price_elem else "Not available"
-                
-                product['productId'] = f"prod-{random.randint(100000, 999999)}"
-                
-                if product['name'] != "Not found":
-                    products.append(product)
-            except Exception:
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # Collect all possible product cards
+        cards = soup.find_all("li")
+
+        for index, card in enumerate(cards[:20]):
+
+            text = card.get_text(" ", strip=True)
+
+            if len(text) < 20:
                 continue
-                
+
+            # Try finding image
+            image_url = ""
+
+            img = card.find("img")
+
+            if img:
+                image_url = (
+                    img.get("src")
+                    or img.get("data-src")
+                    or ""
+                )
+
+            product = {
+                "productId": f"prod-{random.randint(100000, 999999)}",
+                "name": text[:120],
+                "price": "Not available",
+                "image_url": modify_image_url(image_url),
+                "detail_url": url
+            }
+
+            products.append(product)
+
+            if len(products) >= 8:
+                break
+
+        log_to_file(f"Extracted {len(products)} products")
+
+        return products
+
     except Exception as e:
-        log_to_file(f"Error in scrape_bing_shopping: {str(e)}")
-        
-    return products
+        log_to_file(f"Scraping error: {str(e)}")
+        return []
     
 def scrape_product_details(products):
     # Compatibility passthrough: Products are already scraped efficiently in the previous step
@@ -194,8 +195,10 @@ def get_recommendations():
         products = scrape_bing_shopping(search_query)
         log_to_file(f"Scrapped {len(products)} products for query: {search_query}")
         if not products:
-            log_to_file("No products found")
-            return jsonify({"error": "No products found"}), 404
+            return jsonify({
+    "products": [],
+    "message": "No products found"
+}), 200
         
         products = scrape_product_details(products)
         save_to_csv(products)
