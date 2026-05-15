@@ -93,67 +93,39 @@ def save_to_csv(data):
         log_to_file(f"Error saving to CSV: {str(e)}")
 
 def scrape_bing_shopping(query):
-    headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Accept-Language": "en-US,en;q=0.9",
-    }
 
-    encoded_query = quote_plus(query)
-    url = f"https://www.bing.com/shop?q={encoded_query}"
+    sample_products = [
+        {
+            "productId": "prod-101",
+            "name": "Classic Casual Outfit",
+            "price": "₹1999",
+            "image_url": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518",
+            "detail_url": "https://www.amazon.in/"
+        },
+        {
+            "productId": "prod-102",
+            "name": "Modern Streetwear Style",
+            "price": "₹2499",
+            "image_url": "https://images.unsplash.com/photo-1496747611176-843222e1e57c",
+            "detail_url": "https://www.flipkart.com/"
+        },
+        {
+            "productId": "prod-103",
+            "name": "Minimal Fashion Collection",
+            "price": "₹1799",
+            "image_url": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f",
+            "detail_url": "https://www.myntra.com/"
+        },
+        {
+            "productId": "prod-104",
+            "name": "Vintage Outfit Combo",
+            "price": "₹2999",
+            "image_url": "https://images.unsplash.com/photo-1483985988355-763728e1935b",
+            "detail_url": "https://www.ajio.com/"
+        }
+    ]
 
-    products = []
-
-    try:
-        response = requests.get(url, headers=headers, timeout=15)
-
-        if response.status_code != 200:
-            log_to_file(f"Bing request failed: {response.status_code}")
-            return []
-
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        # Collect all possible product cards
-        cards = soup.find_all("li")
-
-        for index, card in enumerate(cards[:20]):
-
-            text = card.get_text(" ", strip=True)
-
-            if len(text) < 20:
-                continue
-
-            # Try finding image
-            image_url = ""
-
-            img = card.find("img")
-
-            if img:
-                image_url = (
-                    img.get("src")
-                    or img.get("data-src")
-                    or ""
-                )
-
-            product = {
-                "productId": f"prod-{random.randint(100000, 999999)}",
-                "name": text[:120],
-                "price": "Not available",
-                "image_url": modify_image_url(image_url),
-                "detail_url": url
-            }
-
-            products.append(product)
-
-            if len(products) >= 8:
-                break
-
-        log_to_file(f"Extracted {len(products)} products")
-
-        return products
-
-    except Exception as e:
-        log_to_file(f"Scraping error: {str(e)}")
-        return []
+    return sample_products
     
 def scrape_product_details(products):
     # Compatibility passthrough: Products are already scraped efficiently in the previous step
