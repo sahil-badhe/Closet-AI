@@ -1,364 +1,141 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import requests
-import json
-import traceback
-import csv
-from datetime import datetime
+from serpapi import GoogleSearch
+import google.generativeai as genai
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 app = Flask(__name__)
 
-# =========================
-# CORS
-# =========================
+# ---------------- CORS ----------------
 CORS(app)
 
-# =========================
-# ENV VARIABLES
-# =========================
+# ---------------- API KEYS ----------------
+SERP_API_KEY = os.getenv("SERPAPI_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-SERP_API_KEY = os.getenv("SERP_API_KEY")
 
-# =========================
-# UTILITIES
-# =========================
-def log_to_file(message):
-    with open("server_log.txt", "a", encoding="utf-8") as f:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        f.write(f"[{timestamp}] {message}\n")
+# ---------------- GEMINI CONFIG ----------------
+genai.configure(api_key=GEMINI_API_KEY)
 
-
-def save_to_csv(data):
-
-    filename = "clothing_data.csv"
-
-    fieldnames = [
-        "timestamp",
-        "name",
-        "price",
-        "image_url",
-        "source",
-        "link"
-    ]
-
-    try:
-
-        with open(filename, "a", newline="", encoding="utf-8") as csvfile:
-
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-            if csvfile.tell() == 0:
-                writer.writeheader()
-
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-            for product in data:
-
-                writer.writerow({
-                    "timestamp": timestamp,
-                    "name": product.get("name", ""),
-                    "price": product.get("price", ""),
-                    "image_url": product.get("image_url", ""),
-                    "source": product.get("source", ""),
-                    "link": product.get("detail_url", "")
-                })
-
-    except Exception as e:
-        log_to_file(f"CSV Save Error: {str(e)}")
-
-
-# =========================
-# AGE GROUP
-# =========================
-def get_age_group(age, gender):
-
-    gender = gender.lower()
-
-    if age <= 12:
-        return f"child {gender}"
-
-    elif age <= 19:
-        return f"teenage {gender}"
-
-    elif age <= 35:
-        return f"young adult {gender}"
-
-    elif age <= 55:
-        return f"middle-aged {gender}"
-
-    else:
-        return f"elderly {gender}"
-
-
-# =========================
-# GEMINI QUERY GENERATOR
-# =========================
-def generate_search_query(gender, age, skin_tone, style, season):
-
-    age_group = get_age_group(age, gender)
-
-    prompt = f"""
-Create a SHORT Google Shopping fashion search query.
-
-User:
-Gender: {gender}
-Age Group: {age_group}
-Skin Tone: {skin_tone}
-Season: {season}
-Fashion Style: {style}
-
-IMPORTANT:
-- return only shopping keywords
-- no sentence
-- no explanation
-- include outfit, clothing, fashion
-- make it broad so many products appear
-
-Example:
-men vintage streetwear outfit
-women korean casual fashion
-summer minimalist clothing
-"""
-
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
-
-    headers = {
-        "Content-Type": "application/json"
-    }
-
-    payload = {
-        "contents": [
-            {
-                "parts": [
-                    {
-                        "text": prompt
-                    }
-                ]
-            }
-        ]
-    }
-
-    response = requests.post(
-        url,
-        headers=headers,
-        data=json.dumps(payload)
-    )
-
-    response_json = response.json()
-
-    try:
-
-        query = response_json['candidates'][0]['content']['parts'][0]['text']
-
-        query = query.strip().replace('"', '')
-
-        print("GEMINI QUERY:", query)
-
-        return query
-
-    except:
-
-        return f"{gender} {style} outfit fashion clothing"
-
-
-# =========================
-# SERPAPI SHOPPING
-# =========================
-def fetch_products_from_serpapi(query):
-
-    url = "https://serpapi.com/search.json"
-
-    all_products = []
-
-    # Fetch multiple pages
-    for start in [0, 20, 40, 60]:
-
-        params = {
-            "engine": "google_shopping",
-            "q": query,
-            "api_key": SERP_API_KEY,
-            "google_domain": "google.com",
-            "gl": "in",
-            "hl": "en",
-            "num": 20,
-            "start": start
-        }
-
-        response = requests.get(url, params=params)
-
-        print("SERP STATUS:", response.status_code)
-
-        data = response.json()
-
-        shopping_results = data.get("shopping_results", [])
-
-        for item in shopping_results:
-
-            product = {
-
-                "productId": item.get("product_id", ""),
-
-                "name": item.get("title", "Fashion Product"),
-
-                "price": item.get("price", "₹1999"),
-
-                "image_url": item.get("thumbnail", ""),
-
-                "detail_url": item.get("link", "https://www.myntra.com/"),
-
-                "source": item.get("source", "Google Shopping"),
-
-                "rating": item.get("rating", 4.5),
-
-                "reviews": item.get("reviews", 100),
-
-                "delivery": item.get("delivery", "Free Delivery"),
-
-                "recommendation_reason":
-                    f"Recommended because it matches your fashion style."
-            }
-
-            all_products.append(product)
-
-    # Remove duplicate products
-    unique_products = []
-
-    seen = set()
-
-    for product in all_products:
-
-        key = product["name"]
-
-        if key not in seen:
-
-            seen.add(key)
-
-            unique_products.append(product)
-
-    # Fallback if API fails
-    if len(unique_products) == 0:
-
-        unique_products = [
-
-            {
-                "productId": "1",
-                "name": "Classic Casual Outfit",
-                "price": "₹1999",
-                "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43b",
-                "detail_url": "https://www.myntra.com/",
-                "source": "Myntra",
-                "rating": 4.5,
-                "reviews": 120,
-                "delivery": "Free Delivery",
-                "recommendation_reason": "Perfect for casual everyday styling."
-            }
-
-        ]
-
-    return unique_products
-
-
-# =========================
-# ROOT ROUTE
-# =========================
-@app.route('/')
+# ---------------- HOME ROUTE ----------------
+@app.route("/")
 def home():
-
     return jsonify({
-        "status": "success",
-        "message": "Closet AI Backend Running"
+        "message": "Closet AI Backend Running Successfully"
     })
 
-
-# =========================
-# MAIN API
-# =========================
-@app.route('/api/recommendations', methods=['POST'])
+# ---------------- RECOMMENDATION ROUTE ----------------
+@app.route("/api/recommendations", methods=["POST"])
 def get_recommendations():
 
     try:
-
         data = request.json
 
-        gender = data.get("gender", "men")
+        # ---------------- FRONTEND DATA ----------------
+        gender = data.get("gender", "")
+        style = data.get("style", "")
+        season = data.get("season", "")
+        occasion = data.get("occasion", "")
+        color = data.get("color", "")
 
-        age_group = data.get("age", "25")
+        # ---------------- GEMINI QUERY ----------------
+        prompt = f"""
+        Generate a trendy shopping search query for fashion products.
 
-        skin_tone = data.get("skinTone", "fair")
+        User Details:
+        Gender: {gender}
+        Style: {style}
+        Season: {season}
+        Occasion: {occasion}
+        Color Preference: {color}
 
-        season = data.get("season", "summer")
+        Rules:
+        - Generate only one shopping query
+        - Make it modern and fashion focused
+        - Do not explain anything
+        """
 
-        styles = data.get("styles", ["casual"])
+        model = genai.GenerativeModel("gemini-1.5-flash")
 
-        import re
+        response = model.generate_content(prompt)
 
-        numbers = re.findall(r'\d+', str(age_group))
+        search_query = response.text.strip()
 
-        age = int(numbers[0]) if numbers else 25
+        print("Generated Query:", search_query)
 
-        style = styles[0] if styles else "casual"
+        # ---------------- MULTIPLE SERP SEARCHES ----------------
+        queries = [
+            search_query,
+            f"{search_query} outfits",
+            f"{search_query} fashion",
+            f"{search_query} streetwear",
+            f"{search_query} clothing",
+            f"{search_query} aesthetic",
+            f"{search_query} trendy"
+        ]
 
-        # =========================
-        # GENERATE GEMINI QUERY
-        # =========================
-        search_query = generate_search_query(
-            gender,
-            age,
-            skin_tone,
-            style,
-            season
-        )
+        all_products = []
 
-        print("SEARCH QUERY:", search_query)
+        for q in queries:
 
-        log_to_file(f"Generated Query: {search_query}")
+            print("Searching:", q)
 
-        # =========================
-        # FETCH PRODUCTS
-        # =========================
-        products = fetch_products_from_serpapi(search_query)
+            params = {
+                "engine": "google_shopping",
+                "q": q,
+                "api_key": SERP_API_KEY,
+                "num": 25
+            }
 
-        save_to_csv(products)
+            search = GoogleSearch(params)
 
-        return jsonify({
+            results = search.get_dict()
 
-            "success": True,
+            shopping_results = results.get("shopping_results", [])
 
-            "query": search_query,
+            print("Products Found:", len(shopping_results))
 
-            "total_products": len(products),
+            for item in shopping_results:
 
-            "products": products
-        })
+                product = {
+                    "title": item.get("title", "Fashion Product"),
+                    "price": item.get("price", "₹1999"),
+                    "image": item.get("thumbnail", ""),
+                    "link": item.get("link", "#"),
+                    "source": item.get("source", "Online Store")
+                }
+
+                # ---------------- REMOVE EMPTY IMAGES ----------------
+                if product["image"] != "":
+                    all_products.append(product)
+
+        # ---------------- REMOVE DUPLICATES ----------------
+        unique_products = []
+
+        seen_titles = set()
+
+        for product in all_products:
+
+            if product["title"] not in seen_titles:
+
+                seen_titles.add(product["title"])
+
+                unique_products.append(product)
+
+        print("FINAL PRODUCTS:", len(unique_products))
+
+        # ---------------- RETURN PRODUCTS ----------------
+        return jsonify(unique_products)
 
     except Exception as e:
 
-        traceback.print_exc()
-
-        log_to_file(str(e))
+        print("SERVER ERROR:")
+        print(str(e))
 
         return jsonify({
-
-            "success": False,
-
             "error": str(e)
-
         }), 500
 
 
-# =========================
-# START SERVER
-# =========================
+# ---------------- RUN SERVER ----------------
 if __name__ == "__main__":
-
-    port = int(os.environ.get("PORT", 5001))
-
-    app.run(
-        host="0.0.0.0",
-        port=port,
-        debug=False
-    )
+    app.run(host="0.0.0.0", port=5000)
