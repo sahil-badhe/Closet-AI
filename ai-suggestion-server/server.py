@@ -2,15 +2,8 @@ from flask import Flask, request, jsonify
 import requests
 import json
 import traceback
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+from bs4 import BeautifulSoup
 from urllib.parse import quote_plus, urlparse, parse_qs, urlunparse, urlencode
-import time
 from flask_cors import CORS
 import csv
 from datetime import datetime
@@ -100,132 +93,70 @@ def save_to_csv(data):
         log_to_file(f"Error saving to CSV: {str(e)}")
 
 def scrape_bing_shopping(query):
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    product_urls = []
-    seen_urls = set()
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    encoded_query = quote_plus(query)
+    url = f"https://www.bing.com/shop?q={encoded_query}&FORM=SHOPTB"
     
+    products = []
     try:
-        encoded_query = quote_plus(query)
-        bing_url = f"https://www.bing.com/shop?q={encoded_query}&FORM=SHOPTB"
-        driver.get(bing_url)
-        time.sleep(3)
-
-        try:
-            WebDriverWait(driver, 3).until(
-                EC.element_to_be_clickable((By.XPATH, "//button[@id='bnp_btn_accept']"))
-            ).click()
-            time.sleep(1)
-        except:
-            pass
-
-        product_links = driver.find_elements(By.XPATH, "//a[@aria-label='oboSnOptLink']")
+        response = requests.get(url, headers=headers, timeout=10)
+        if response.status_code != 200:
+            log_to_file(f"Bing search failed with status {response.status_code}")
+            return []
         
-        if not product_links:
-            product_links = driver.find_elements(By.XPATH, "//a[@aria-label='Product details']")
-
-        for link in product_links[:16]:  
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Bing Shopping structure uses various classes for product items
+        items = soup.select('.br-item, .br-pdItem, .br-gOffCard, .br-pdItemWrap')
+        
+        for item in items[:16]:
             try:
-                url = link.get_attribute("href")
-                if url and url not in seen_urls:
-                    seen_urls.add(url)
-                    product_urls.append(url)
-            except:
+                product = {}
+                
+                # Name
+                name_elem = item.select_one('.br-pdTtl, .title, .br-name, .br-pdItemName')
+                product['name'] = name_elem.get_text(strip=True) if name_elem else "Not found"
+                
+                # Link
+                link_elem = item.select_one('a[href*="/shop/productpage"], a[href*="/aclick"]')
+                if link_elem:
+                    detail_url = link_elem['href']
+                    if detail_url.startswith('/'):
+                        detail_url = "https://www.bing.com" + detail_url
+                    product['detail_url'] = detail_url
+                else:
+                    product['detail_url'] = url
+                
+                # Image
+                img_elem = item.select_one('img')
+                if img_elem:
+                    img_url = img_elem.get('src') or img_elem.get('data-src')
+                    product['image_url'] = modify_image_url(img_url)
+                else:
+                    product['image_url'] = "Not found"
+                    
+                # Price
+                price_elem = item.select_one('.pd-price, .br-pdPrice, .price, .br-price')
+                product['price'] = price_elem.get_text(strip=True) if price_elem else "Not available"
+                
+                product['productId'] = f"prod-{random.randint(100000, 999999)}"
+                
+                if product['name'] != "Not found":
+                    products.append(product)
+            except Exception:
                 continue
-
+                
     except Exception as e:
         log_to_file(f"Error in scrape_bing_shopping: {str(e)}")
-    finally:
-        driver.quit()
-
-    return product_urls
+        
+    return products
     
-def scrape_product_details(product_urls):
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-
-    products = []
-
-    for url in product_urls:
-        product = {}
-        try:
-            driver.get(url)
-            time.sleep(2) 
-
-            try:
-                name_element = WebDriverWait(driver, 5).until(
-                    EC.presence_of_element_located((By.XPATH, "//h1[contains(@class, 'br-pdTtl')]"))
-                )
-                product['name'] = name_element.text
-            except:
-                product['name'] = "Not found"
-
-            try:
-                img_element = WebDriverWait(driver, 5).until(
-                    EC.presence_of_element_located((By.XPATH, "//img[contains(@alt, 'Product Image') or contains(@alt, 'product image')]"))
-                )
-                original_img_url = img_element.get_attribute('src') or img_element.get_attribute('data-src')
-                product['image_url'] = modify_image_url(original_img_url)
-            except:
-                product['image_url'] = "Not found"
-
-            try:
-                try:
-                    price_meta = driver.find_element(By.XPATH, "//meta[@property='product:price:amount']")
-                    product['price'] = price_meta.get_attribute('content')
-                except:
-                    try:
-                        price_currency = driver.find_element(By.XPATH, "//span[contains(@class, 'br-oboSnDp')]//span[contains(@class, 'price-currency')]").text
-                        price_integer = driver.find_element(By.XPATH, "//span[contains(@class, 'br-oboSnDp')]//span[contains(@class, 'price-integer')]").text
-                        product['price'] = f"{price_currency}{price_integer}"
-                    except:
-                        price_selectors = [
-                            "//div[contains(@class, 'price')]",
-                            "//span[contains(@class, 'price')]",
-                            "//div[contains(@class, 'product-price')]",
-                            "//span[contains(@class, 'product-price')]",
-                            "//div[contains(@class, 'p-price')]",
-                            "//span[contains(@class, 'p-price')]"
-                        ]
-                        for selector in price_selectors:
-                            try:
-                                price_element = driver.find_element(By.XPATH, selector)
-                                product['price'] = price_element.text.strip()
-                                if product['price']:
-                                    break
-                            except:
-                                continue
-                        if 'price' not in product or not product['price']:
-                            try:
-                                price_text = driver.find_element(By.XPATH, "//*[contains(translate(text(), '0123456789', ''), '$₹€£')]")
-                                product['price'] = price_text.text.strip()
-                            except:
-                                product['price'] = "Not available"
-            except:
-                product['price'] = "Not available"
-
-            try:
-                opt_link_element = driver.find_element(By.XPATH, "//a[contains(@class, 'br-oboSnOptLink')]")
-                opt_link_href = opt_link_element.get_attribute("href")
-                product['detail_url'] = opt_link_href
-            except:
-                print("Optional link not found")
-
-            product['productId'] = f"prod-{random.randint(100000, 999999)}"
-            products.append(product)
-
-        except Exception as e:
-            log_to_file(f"Error scraping product: {str(e)}")
-            continue
-
-    driver.quit()
+def scrape_product_details(products):
+    # Compatibility passthrough: Products are already scraped efficiently in the previous step
+    # to ensure stability on Render Free Tier and avoid request timeouts.
     return products
 
 @app.route('/')

@@ -28,10 +28,9 @@ tqdm==4.67.1
 typing_extensions==4.12.2
 uritemplate==4.1.1
 urllib3==2.3.0
+beautifulsoup4
 gunicorn==23.0.0
 Flask==3.0.3
-selenium==4.25.0
-webdriver-manager==4.0.2
 flask-cors==4.0.0
 itsdangerous==2.1.2
 Jinja2==3.1.2
