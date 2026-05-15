@@ -163,61 +163,77 @@ def fetch_products_from_serpapi(query):
 
     url = "https://serpapi.com/search.json"
 
-    params = {
-        "engine": "google_shopping",
-        "q": query,
-        "api_key": SERP_API_KEY,
-        "google_domain": "google.com",
-        "gl": "in",
-        "hl": "en",
-        "num": 20
-    }
+    all_products = []
 
-    response = requests.get(url, params=params)
+    # Fetch multiple pages
+    for start in [0, 20, 40, 60]:
 
-    print("SERP STATUS:", response.status_code)
-    print("SERP RESPONSE:", response.text)
-
-    data = response.json()
-
-    shopping_results = data.get("shopping_results", [])
-
-    products = []
-
-    for item in shopping_results:
-
-        product = {
-
-            "productId": item.get("product_id", ""),
-
-            "name": item.get("title", "Fashion Product"),
-
-            "price": item.get("price", "₹1999"),
-
-            "image_url": item.get("thumbnail", ""),
-
-            "detail_url": item.get("link", "https://www.myntra.com/"),
-
-            "source": item.get("source", "Google Shopping"),
-
-            "rating": item.get("rating", 4.5),
-
-            "reviews": item.get("reviews", 100),
-
-            "delivery": item.get("delivery", "Free Delivery"),
-
-            "recommendation_reason":
-                f"Recommended because it matches your fashion style."
+        params = {
+            "engine": "google_shopping",
+            "q": query,
+            "api_key": SERP_API_KEY,
+            "google_domain": "google.com",
+            "gl": "in",
+            "hl": "en",
+            "num": 20,
+            "start": start
         }
 
-        products.append(product)
+        response = requests.get(url, params=params)
 
-    # =========================
-    # FALLBACK PRODUCTS
-    # =========================
-    if len(products) == 0:
+        print("SERP STATUS:", response.status_code)
 
-        products = [
+        data = response.json()
+
+        shopping_results = data.get("shopping_results", [])
+
+        for item in shopping_results:
+
+            product = {
+
+                "productId": item.get("product_id", ""),
+
+                "name": item.get("title", "Fashion Product"),
+
+                "price": item.get("price", "₹1999"),
+
+                "image_url": item.get("thumbnail", ""),
+
+                "detail_url": item.get("link", "https://www.myntra.com/"),
+
+                "source": item.get("source", "Google Shopping"),
+
+                "rating": item.get("rating", 4.5),
+
+                "reviews": item.get("reviews", 100),
+
+                "delivery": item.get("delivery", "Free Delivery"),
+
+                "recommendation_reason":
+                    f"Recommended because it matches your fashion style."
+            }
+
+            all_products.append(product)
+
+    # Remove duplicate products
+    unique_products = []
+
+    seen = set()
+
+    for product in all_products:
+
+        key = product["name"]
+
+        if key not in seen:
+
+            seen.add(key)
+
+            unique_products.append(product)
+
+    # Fallback if API fails
+    if len(unique_products) == 0:
+
+        unique_products = [
 
             {
                 "productId": "1",
@@ -230,49 +246,11 @@ def fetch_products_from_serpapi(query):
                 "reviews": 120,
                 "delivery": "Free Delivery",
                 "recommendation_reason": "Perfect for casual everyday styling."
-            },
-
-            {
-                "productId": "2",
-                "name": "Modern Streetwear Style",
-                "price": "₹2499",
-                "image_url": "https://images.unsplash.com/photo-1496747611176-843222e1e57c",
-                "detail_url": "https://www.amazon.in/",
-                "source": "Amazon",
-                "rating": 4.7,
-                "reviews": 220,
-                "delivery": "Free Delivery",
-                "recommendation_reason": "Trending Gen-Z streetwear fashion."
-            },
-
-            {
-                "productId": "3",
-                "name": "Minimal Fashion Collection",
-                "price": "₹1799",
-                "image_url": "https://images.unsplash.com/photo-1529139574466-a303027c1d8b",
-                "detail_url": "https://www.flipkart.com/",
-                "source": "Flipkart",
-                "rating": 4.4,
-                "reviews": 180,
-                "delivery": "Free Delivery",
-                "recommendation_reason": "Minimal modern fashion collection."
-            },
-
-            {
-                "productId": "4",
-                "name": "Vintage Outfit Combo",
-                "price": "₹2999",
-                "image_url": "https://images.unsplash.com/photo-1483985988355-763728e1935b",
-                "detail_url": "https://www.ajio.com/",
-                "source": "Ajio",
-                "rating": 4.8,
-                "reviews": 310,
-                "delivery": "Free Delivery",
-                "recommendation_reason": "Vintage aesthetic inspired styling."
             }
+
         ]
 
-    return products
+    return unique_products
 
 
 # =========================
